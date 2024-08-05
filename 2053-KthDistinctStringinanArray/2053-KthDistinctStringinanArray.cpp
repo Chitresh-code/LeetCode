@@ -1,26 +1,21 @@
 class Solution {
 public:
     string kthDistinct(vector<string>& arr, int k) {
-        vector<string> sol;
+        unordered_map<string, int> countMap;
 
-        for (auto i = arr.begin(); i < arr.end(); ++i) {
-            int check = 0;
-            for (auto j = arr.begin(); j < arr.end(); ++j) {
-                if (i != j && *i == *j) {
-                    check++;
-                    break;
+        for (const auto& str : arr) {
+            countMap[str]++;
+        }
+
+        for (const auto& str : arr) {
+            if (countMap[str] == 1) {
+                k--;
+                if (k == 0) {
+                    return str;
                 }
             }
-
-            if (check == 0) {
-                sol.push_back(*i);
-            }
         }
 
-        if (k > sol.size()) {
-            return "";
-        }
-
-        return sol[k-1];
+        return "";
     }
 };
