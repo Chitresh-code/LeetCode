@@ -1,27 +1,24 @@
 class Solution {
 public:
     bool lemonadeChange(vector<int>& bills) {
-        int count_5 = 0, count_10 = 0,count_20 = 0;
-        for(auto note : bills) {
-            if (note == 5) {
-                count_5++;
+        ios_base::sync_with_stdio(false);
+        cin.tie(NULL);
+        cout.tie(NULL);
+        int fives_count=0,tens_count=0,tws_count=0;
+        for(int i:bills){
+            if(i==5) fives_count++;
+            else if(i==10){
+                fives_count--;
+                if(fives_count<0) return false;
+                tens_count++;
             }
-            if (note == 10) {
-                count_10++;
-                if (count_5 != 0) {
-                    count_5--;
+            else{
+                if(tens_count>=1 && fives_count>=1){
+                    tens_count--;
+                    fives_count--;
+                    tws_count++;
                 }
-                else return false;
-            }
-            if (note == 20) {
-                count_20++;
-                if ((count_10 != 0) && (count_5 != 0)) {
-                    count_10--;
-                    count_5--;
-                }
-                else if (count_5 >= 3) {
-                    count_5 -= 3;
-                }
+                else if(fives_count>=3) fives_count=fives_count-3;
                 else return false;
             }
         }
